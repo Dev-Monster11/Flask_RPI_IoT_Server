@@ -1,0 +1,587 @@
+<Site>
+SiteName = Dev
+SiteID = 10000015
+SiteCoordinates = 43.64275, -79.38705
+SiteContactEmail = test@gmail.com
+SiteAddress = 1 Road, City Name, Province, Postal Code, Canada
+SiteRemarks = Development device
+
+</Site>
+
+<Device>
+HWRev = 2.0
+SWRev = Rev100
+SN = 00000001
+
+</Device>
+
+<Networking>
+EthernetMasks = 11
+En0WANIP = 192.168.0.12
+En0WANNetMask = 255.255.255.0
+En1LANIP = 192.168.1.204
+En1LANNetMask = 255.255.255.0
+GatewayIP = 10.10.10.100
+DNSServer = 
+NTPServer = time.nist.gov
+TimeZone = UTC+5
+TimeAuto = Yes
+DSTAuto = Yes
+
+</Networking>
+
+<SysAccess>
+AccessPWComplexityEnable = No
+AccessPWLifetimeEnable = No
+Access2FAEnable = No
+Access2FATimer = 4
+Access2FAGoogleEnable = No
+
+</SysAccess>
+
+<Firewall>
+FirewallAppEnable = No
+FirewallAdminIP0 = 
+
+</Firewall>
+
+<Supervisor>
+SysHeartbeatReportInterval = 
+Eth0LinkRestartInterval = 
+Eth1LinkRestartInterval = 
+DataBackupSchedule = 
+SoftRestartSchedule = 
+SystemRebootSchedule = 
+SystemSupervisorScript = /home/cvuserapps/testscript.sh
+
+</Supervisor>
+
+<AlarmVariables>
+@SiteName
+@SiteID
+@SiteIP
+@SiteCoordinates
+@SiteAddress
+@SiteRemarks
+@AlarmDate
+@AlarmTime
+@AlarmInterface
+@AlarmSource
+@AlarmValue
+@AlarmName
+@AlarmDescription
+
+</AlarmVariables>
+
+<Email>
+EmailNotificationEnable = No
+EmailTo = 
+EmailCC = 
+EmailFrom = 
+EmailSubject = Testing 
+EmailMsgHeader = *** Begin ***
+EmailMsgTrailer = *** End ***
+EmailFormat = html
+smtpRoot = 
+smtpMailhub = 
+smtpRewriteDomain = 
+smtpHostname = localhost
+smtpFromLineOverride = Yes
+smtpUseTLS = 
+smtpUseSTARTTLS = 
+smtpTLSCert = 
+smtpTLSKey = 
+smtpTLS_CA_File = 
+smtpTLS_CA_Dir = 
+smtpAuthUser = 
+smtpAuthPass = 
+smtpAuthMethod = 
+
+</Email>
+
+<httpPost>
+httpPostNotificationEnable = No
+httpPostURL0 = 192.168.155.10/process-alarm.php
+httpPostURL1 = 192.168.155.13/process-alarm.php
+httpPostURL2 = 192.168.155.14/process-alarm.php
+
+</httpPOST>
+
+<SNMP>
+SNMPNotificationEnable = Yes
+snmpManagerIP0 = 
+snmpNotificationType0 = 
+snmpv12Community0 = 
+snmpv3TrapEngineID0 = 
+snmpv3InfEngineID0 = 
+snmpv3SecurityLevel0 = 
+snmpv3SecurityName0 = 
+snmpv3AuthProtocol0 = 
+snmpv3AuthKey0 = 
+snmpv3PrivProtocol0 = 
+snmpv3PrivKey0 = 
+snmpManagerIP1 = 
+snmpNotificationType1 = 
+snmpv12Community1 = 
+snmpv3TrapEngineID1 = 
+snmpv3InfEngineID1 = 
+snmpv3SecurityLevel1 = 
+snmpv3SecurityName1 = 
+snmpv3AuthProtocol1 = 
+snmpv3AuthKey1 = 
+snmpv3PrivProtocol1 = 
+snmpv3PrivKey1 = 
+snmpManagerIP2 = 
+snmpNotificationType2 = 
+snmpv12Community2 = 
+snmpv3TrapEngineID2 = 
+snmpv3InfEngineID2 = 
+snmpv3SecurityLevel2 = 
+snmpv3SecurityName2 = 
+snmpv3AuthProtocol2 = 
+snmpv3AuthKey2 = 
+snmpv3PrivProtocol2 = 
+snmpv3PrivKey2 = 
+
+</SNMP>
+
+<Rsyslog>
+RsyslogNotificationEnable = No
+RsyslogServer0 = 
+RsyslogServer1 = 
+RsyslogServer2 = 
+
+</Rsyslog>
+
+<SNMPAgent>
+SNMPAgentEnable = Yes
+SNMPDSysLocation = Test site
+SNMPDSysContact = testsite@test.com
+SNMPDSysName = Testsite
+SNMPDSysDescription = Test site description
+SNMPDSysObjectID = 12345678
+SNMPDv12Community = public
+SNMPDv3EngineID = 800074400a03b827ebefd587
+SNMPDv3SecurityName0 = User1
+SNMPDv3AuthProtocol0 = SHA
+SNMPDv3AuthKey0 = User1PassPhrase
+SNMPDv3PrivProtocol0 = AES
+SNMPDv3PrivKey0 = PassPhrase1
+SNMPDv3SecurityName1 = User2
+SNMPDv3AuthProtocol1 = SHA
+SNMPDv3AuthKey1 = User2PassPhrase
+SNMPDv3PrivProtocol1 = AES
+SNMPDv3PrivKey1 = PassPhrase2
+SNMPDv3SecurityName2 = User3
+SNMPDv3AuthProtocol2 = SHA
+SNMPDv3AuthKey2 = User3PassPhrase
+SNMPDv3PrivProtocol2 = AES
+SNMPDv3PrivKey2 = PassPhrase3
+
+</SNMPAgent>
+
+<Inputs>
+InputsAppEnable = Yes
+InputMasks = 111111111111111111111111111111111111
+InputPollInterval = 1
+InputName0 = Contact 0
+InputName1 = Contact 1
+InputName2 = Contact 2
+InputName3 = Contact 3
+InputName4 = Contact 4
+InputName5 = Contact 5
+InputName6 = Contact 6
+InputName7 = Contact 7
+InputName8 = Contact 8
+InputName9 = Contact 9
+InputName10 = Contact 10
+InputName11 = Contact 11
+InputName12 = Contact 12
+InputName13 = Contact 13
+InputName14 = Contact 14
+InputName15 = Contact 15
+InputName16 = Contact 16
+InputName17 = Contact 17
+InputName18 = Contact 18
+InputName19 = Contact 19
+InputName20 = Contact 20
+InputName21 = Contact 21
+InputName22 = Contact 22
+InputName23 = Contact 23
+InputName24 = Contact 24
+InputName25 = Contact 25
+InputName26 = Contact 26
+InputName27 = Contact 27
+InputName28 = Contact 28
+InputName29 = Contact 29
+InputName30 = Contact 30
+InputName31 = Contact 31
+InputName32 = Contact 32
+InputName33 = Contact 33
+InputName34 = Contact 34
+InputName35 = Contact 35
+InputCondition0 = 0, Low, 00:05, X, X, 99:59, Alarm, Contact 0 alarm
+InputCondition1 = 1, Low, 00:10, X, X, 99:59, Alarm, Contact 1 alarm
+InputCondition2 = 2, Low, 00:15, X, X, 99:59, Alarm, Contact 2 alarm
+InputCondition3 = 3, Low, 00:20, X, X, 00:04, Alarm, Contact 3 alarm
+InputCondition4 = 4, Low, 00:05, X, X, 99:59, Alarm, Contact 4 alarm
+InputCondition5 = 5, Low, 00:10, X, X, 99:59, Alarm, Contact 5 alarm
+InputCondition6 = 6, Low, 00:15, x, x, 99:59, Alarm, Contact 6 alarm
+InputCondition7 = 7, Low, 00:20, X, X, 99:59, Alarm, Contact 7 alarm
+InputCondition8 = 8, Low, 00:25, X, X, 99:59, Alarm, Contact 8 alarm
+InputCondition9 = 9, Low, 00:30, X, X, 99:59, Alarm, Contact 9 alarm
+InputCondition10 = 10, Low, 00:35, X, X, 99:59, Alarm, Contact 10 alarm
+InputCondition11 = 11, Low, 00:40, X, X, 00:30, Alarm, Contact 11 alarm
+InputCondition12 = 12, Low, 00:05, X, X, 99:59, Alarm, Contact 12 alarm
+InputCondition13 = 13, Low, 00:10, X, X, 99:59, Alarm, Contact 13 alarm
+InputCondition14 = 14, Low, 00:15, X, X, 99:59, Alarm, Contact 14 alarm
+InputCondition15 = 15, Low, 00:20, X, X, 99:59, Alarm, Contact 15 alarm
+InputCondition16 = 16, Low, 00:25, X, X, 99:59, Alarm, Contact 16 alarm
+InputCondition17 = 17, Low, 00:30, X, X, 99:59, Alarm, Contact 17 alarm
+InputCondition18 = 18, Low, 00:35, X, X, 99:59, Alarm, Contact 18 alarm
+InputCondition19 = 19, Low, 00:40, X, X, 01:00, Alarm, Contact 19 alarm
+InputCondition20 = 20, Low, 00:05, X, X, 99:59, Alarm, Contact 20 alarm
+InputCondition21 = 21, Low, 00:10, X, X, 99:59, Alarm, Contact 21 alarm
+InputCondition22 = 22, Low, 00:15, X, X, 99:59, Alarm, Contact 22 alarm
+InputCondition23 = 23, Low, 00:20, X, X, 99:59, Alarm, Contact 23 alarm
+InputCondition24 = 24, Low, 00:25, X, X, 99:59, Alarm, Contact 24 alarm
+InputCondition25 = 25, Low, 00:30, X, X, 99:59, Alarm, Contact 25 alarm
+InputCondition26 = 26, Low, 00:35, X, X, 99:59, Alarm, Contact 26 alarm
+InputCondition27 = 27, Low, 00:40, X, X, 01:00, Alarm, Contact 27 alarm
+InputCondition28 = 28, Low, 00:25, X, X, 99:59, Alarm, Contact 28 alarm
+InputCondition29 = 29, Low, 00:30, X, X, 99:59, Alarm, Contact 29 alarm
+InputCondition30 = 30, Low, 00:35, X, X, 99:59, Alarm, Contact 30 alarm
+InputCondition31 = 31, Low, 00:40, X, X, 99:59, Alarm, Contact 31 alarm
+InputCondition32 = 32, Low, 00:45, X, X, 99:59, Alarm, Contact 32 alarm
+InputCondition33 = 33, Low, 00:50, X, X, 99:59, Alarm, Contact 33 alarm
+InputCondition34 = 34, Low, 00:55, X, X, 99:59, Alarm, Contact 34 alarm
+InputCondition35 = 35, Low, 01:00, X, X, 01:00, Alarm, Contact 35 alarm
+InputsRawFileSize = 16,50, 6
+InputsScript = 
+
+</Inputs>
+
+<Outputs>
+OutputAppEnable = Yes
+OutputMasks = 111111
+OutputPollInterval = 1
+OutputDefault = 111111
+OutputName0 = Relay 0
+OutputName1 = Relay 1
+OutputName2 = Relay 2
+OutputName3 = Relay 3
+OutputName4 = Relay 4
+OutputName5 = Relay 5
+OutputRawFileSize = 16,50
+
+</Outputs>
+
+<Analogs>
+AnalogsAppEnable = Yes
+AnalogMasks = 111111
+AnalogCalOffset = -4.1187, -4.005, -4.1366, -7.5419, -3.9397, -3.9137
+AnalogPollInterval = 1
+AnalogName0 = Analog Sensor 00
+AnalogName1 = Analog Sensor 01
+AnalogName2 = Analog Sensor 02
+AnalogName3 = Analog Sensor 03
+AnalogName4 = Analog Sensor 04
+AnalogName5 = Analog Sensor 05
+AnalogConverter0 = 0, 72V, *, 0, 72, 0, 72, V, 0.068
+AnalogConverter1 = 1, 72V, *, 0, 72, 0, 72, V, 0.128
+AnalogConverter2 = 2, 36V, *, 0, 36, 0, 36, V, 0.034
+AnalogConverter3 = 3, 36V, *, 0, 36, 0, 36, V, 0.039
+AnalogConverter4 = 4, 18V, *, 0, 18, 0, 18, V, 0
+AnalogConverter5 = 5, 18V, *, 0, 18, 0, 18, V, 0.05
+AnalogCondition0 = 0, RiseAbove, 3 | 0.05, X, X, 00:15, Alarm, Vin>3V
+AnalogCondition1 = 1, RiseAbove, 6| 0.05, X, X, 00:15, Alarm, Vin>6V
+AnalogCondition2 = 2, RiseAbove, 7 |0.05, X, X, 00:15, Alarm, Vin>7V
+AnalogCondition3 = 3, Equal, 8 | 0.05, X, X, 00:15, Alarm, Vin=8V
+AnalogCondition4 = 4, Equal, 10| 0.05, X, X, 00:15, Alarm, Vin=10V
+AnalogCondition5 = 5, Equal, 12| 0.05, X, X, 00:15, Alarm, Vin=12V
+AnalogsRawFileSize = 16, 50, 5
+AnalogsAlarmFileSize = 16, 50, 5
+AnalogsScript = 
+
+</Analogs>
+
+<RS485>
+RS485AppEnable = Yes
+RS485Masks = 11
+RS485PollInterval = 5
+P0_Protocol0 = Modbus
+P0_DeviceID0 = 13
+P0_PortSetting0 = 9600, 8, N, 1
+P0_ReadData0 = 03.099:3, 03.105, 03.106:4
+P0_Protocol1 = Modbus
+P0_DeviceID1 = 2
+P0_PortSetting1 = 9600, 8, N, 1
+P0_ReadData1 = 04.00:2, 04.06:2, 04.12:2, 04.70:2
+P1_Protocol0 = Modbus
+P1_DeviceID0 = 15
+P1_PortSetting0 = 9600, 8, N, 1
+P1_ReadData0 = 04.29:6
+P1_Protocol1 = Modbus
+P1_DeviceID1 = 1
+P1_PortSetting1 = 9600, 8, N, 1
+P1_ReadData1 = 04.00:2, 04.06:2, 04.12:2, 04.70:2
+P0_RS485DeviceName0 = P0_0
+P0_RS485Record0 = Var0, Celsius, Var1, Fahrenheit
+*Var0 = Reg1/10
+*Var1 = Reg1/10 * 1.8 + 32
+P0_RS485RecordDescription0 = TempSensor
+P0_RS485Condition0.0 = Var0, RiseAbove, 25, X, X, 00:00, Alarm, Rise above 25C
+P0_RS485Script0 = ;echo check
+P0_RS485RawFileSize0 = 8, 50
+P0_RS485DeviceName1 = P0_1
+P0_RS485Record1 = V, V, A, A, W, W, H, Hz
+*V = f32(Reg0, Reg1)
+*A = f32(Reg2, Reg3)
+*W = f32(Reg4, Reg5)
+*H = f32(Reg6, Reg7)
+P0_RS485RecordDescription1 = V,A,W,Hz
+P0_RS485Condition1.0 = V, FallBelow, 115 | 1.5, X, X, 00:10, Alarm, 630_Voltage < 115V
+P0_RS485Condition1.1 = A, FallBelow, 0.1, X, X, 00:10, /home/cvuserapps/TestScript.sh, 630_Current < 0.1A
+P0_RS485Condition1.2 = W, FallBelow, 2, X, X, 00:00, Alarm, 630_Power < 2W
+P0_RS485Script1 = 
+P0_RS485RawFileSize1 = 8, 50
+P1_RS485DeviceName0 = P1_0
+P1_RS485Record0 = Var0, C, Var1, g/m3, Var2, C dew point
+*Var0 = Reg3/10
+*Var1 = Reg4/10
+*Var2 = Reg5/10
+P1_RS485RecordDescription0 = Mixed Units
+P1_RS485Condition0.0 = Var0, RiseAbove, 25, X, X, 00:00, Alarm, Rise above 25C
+P1_RS485Script0 = 
+P1_RS485RawFileSize0 = 8, 50
+P1_RS485DeviceName1 = P1_1
+P1_RS485Record1 = Var0, V, Var1, A, Var2, W, Var3, Hz
+*Var0 = f32(Reg0, Reg1)
+*Var1 = f32(Reg2, Reg3)
+*Var2 = f32(Reg4, Reg5)
+*Var3 = f32(Reg6, Reg7)
+P1_RS485RecordDescription1 = V,A,W,Hz
+P1_RS485Condition1.0 = Var0, FallBelow, 115 | 1.5, X, X, 00:10, Alarm, 230_Voltage < 115V
+P1_RS485Condition1.1 = Var1, FallBelow, 0.1, X, X, 00:10, Alarm, 230_Current < 0.1A
+P1_RS485Condition1.2 = Var2, FallBelow, 2, X, X, 00:00, Alarm, 230_Power < 2W
+P1_RS485Script1 = ;echo check
+P1_RS485RawFileSize1 = 8, 50
+RS485AlarmFileSize = 8, 50
+RS485Script = 
+
+</RS485>
+
+<RS232>
+SerialAppEnable = Yes
+SerialMasks = 11111111
+SerialPortSetting0 = 115200, 8, N, 1, 0x0a
+SerialName0 = Server Console 0
+SerialMode0 = Both
+SerialSSHPort0 = 
+Serial2IP0 = 
+IP2Serial0 = 
+Condition0.0 = ***, 0, On, 00:10, Alarm, ALARM error
+Condition0.1 = 005, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition0.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize0 = 32, 50
+SerialScript0 = 
+SerialPortSetting1 = 115200, 8, N, 1, 0x0a
+SerialName1 = Server Console 1
+SerialMode1 = Both
+SerialSSHPort1 = 
+Serial2IP1 = 
+IP2Serial1 = 
+Condition1.0 = ===, 0, On, 00:10, Alarm, ALARM error
+Condition1.1 = 010, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition1.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize1 = 32, 50
+SerialScript1 = 
+SerialPortSetting2 = 115200, 8, N, 1, 0x0a
+SerialName2 = Server Console 2
+SerialMode2 = Both
+SerialSSHPort2 = 
+Serial2IP2 = 
+IP2Serial2 = 
+Condition2.0 = ???, 0, On, 00:10, Alarm, ALARM error
+Condition2.1 = 015, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition2.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize2 = 32, 50
+SerialScript2 = 
+SerialPortSetting3 = 115200, 8, N, 1, 0x0a
+SerialName3 = Server Console 3
+SerialMode3 = Both
+SerialSSHPort3 = 
+Serial2IP3 = 
+IP2Serial3 = 
+Condition3.0 = <<<, 0, On, 00:10, Alarm, ALARM error
+Condition3.1 = 020, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition3.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize3 = 32, 50
+SerialScrip3 = 
+SerialPortSetting4 = 115200, 8, N, 1, 0x0a
+SerialName4 = Server Console 4
+SerialMode4 = Both
+SerialSSHPort4 = 
+Serial2IP4 = 
+IP2Serial4 = 
+Condition4.0 = ///, 0, On, 00:10, Alarm, ALARM error
+Condition4.1 = 025, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition4.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize4 = 32, 50
+SerialScript4 = 
+SerialPortSetting5 = 115200, 8, N, 1, 0x0a
+SerialName5 = Server Console 5
+SerialMode5 = Both
+SerialSSHPort5 = 
+Serial2IP5 = 
+IP2Serial5 = 
+Condition5.0 = ---, 1, On, 00:10, Alarm, ALARM error
+Condition5.1 = 030, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition5.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize5 = 32, 50
+SerialScript5 = 
+SerialPortSetting6 = 115200, 8, N, 1, 0x0a
+SerialName6 = Server Console 6
+SerialMode6 = Both
+SerialSSHPort6 = 
+Serial2IP6 = 
+IP2Serial6 = 
+Condition6.0 = $$$, 0, On, 00:10, Alarm, ALARM error
+Condition6.1 = 035, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition6.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize6 = 32, 50
+SerialScript6 = 
+SerialPortSetting7 = 115200, 8, N, 1, 0x0a
+SerialName7 = Server Console 7
+SerialMode7 = Both
+SerialSSHPort7 = 
+Serial2IP7 = 
+IP2Serial7 = 
+Condition7.0 = ###, 0, On, 00:10, Alarm, ALARM error
+Condition7.1 = 040, X, X, 00:15, /home/cvuserapps/TestScript.sh, ALARM error
+Condition7.2 = L050, X, X, 00:10, Alarm, ALARM error
+SerialRawFileSize7 = 32, 50
+SerialScript7 = 
+SerialAlarmFileSize = 16, 50
+SerialScript = 
+
+</RS232>
+
+<1Wire>
+1WireAppEnable = Yes
+1WireMasks = 1
+1WirePollInterval = 5
+1WireDeviceName0 = Sensor___00000_________
+1WireDeviceName1 = Sensor____11111________
+1WireDeviceName2 = Sensor_____22222_______
+1WireDeviceName3 = Sensor______33333______
+1WireDeviceName4 = Sensor_______44444_____
+1WireDeviceName5 = Sensor________55555____
+1WireDeviceName6 = Sensor_________66666___
+1WireDeviceName7 = Sensor__________77777__
+1WireProtocol0 = DS18B20
+1WireProtocol1 = DS18B20
+1WireProtocol2 = DS18B20
+1WireProtocol3 = DS18B20
+1WireProtocol4 = DS18B20
+1WireProtocol5 = DS18B20
+1WireProtocol6 = DS18B20
+1WireProtocol7 = DS18B20
+1WireDeviceID0 = 28-00000cdf1b80
+1WireDeviceID1 = 28-00000ce0213e
+1WireDeviceID2 = 28-00000cdfb2e6
+1WireDeviceID3 = 28-00000cdfc8d3
+1WireDeviceID4 = 28-00000cdf797f
+1WireDeviceID5 = 28-00000cdf8808
+1WireDeviceID6 = 28-00000cdfd992
+1WireDeviceID7 = 28-00000cdfd2f4
+1WireUoM0 = C
+1WireUoM1 = C
+1WireUoM2 = C
+1WireUoM3 = C
+1WireUoM4 = C
+1WireUoM5 = C
+1WireUoM6 = C
+1WireUoM7 = C
+1WireCondition0.0 = 0, RiseAbove, 26.00|0.02, x, x, 99:59, Alarm, Sensor0 > 25C
+1WireCondition1.0 = 1, RiseAbove, 25.00|0.02, x, x, 99:59, Alarm, Sensor1 > 25C
+1WireCondition2.0 = 2, RiseAbove, 30.00|0.02, x, x, 99:59, Alarm, Sensor2 > 30C
+1WireCondition3.0 = 3, RiseAbove, 30.00|0.02, x, x, 00:10, Alarm, Sensor3 > 30C
+1WireCondition4.0 = 4, RiseAbove, 25.00|0.02, x, x, 99:59, Alarm, Sensor4 > 25C
+1WireCondition5.0 = 5, RiseAbove, 30.00|0.02, x, x, 99:59, Alarm, Sensor5 > 30C
+1WireCondition6.0 = 6, RiseAbove, 25.00|0.02, x, x, 99:59, Alarm, Sensor6 > 25C
+1WireCondition7.0 = 6, RiseAbove, 25.00|0.02, x, x, 99:59, Alarm, Sensor7 > 25C
+1WireScript0 = 
+1WireScript1 = 
+1WireScript2 = 
+1WireScript3 = 
+1WireScript4 = 
+1WireScript5 = 
+1WireScript6 = 
+1WireScript7 = 
+1WireRawFileSize0 = 10, 50, 5
+1WireRawFileSize1 = 10, 50, 5
+1WireRawFileSize2 = 10, 50, 7
+1WireRawFileSize3 = 10, 50, 7
+1WireRawFileSize4 = 10, 50, 10
+1WireRawFileSize5 = 10, 50, 10
+1WireRawFileSize6 = 10, 50, 12
+1WireRawFileSize7 = 10, 50, 12
+1WireAlarmFileSize = 16, 50
+1WireScript = 
+
+</1Wire>
+
+<NetApp>
+NetAppEnable = Yes
+NetApp0 = Socket 60000, Raw, eth0, TCP, 60000
+NetAppScript0 = 
+NetAppCondition0.0 = 
+NetAppRawFileSize0 = 8, 50, 5
+NetApp1 = Socket 60001, Both, eth1, TCP, 60001
+NetAppScript1 = 
+NetAppCondition1.0 = 'ALARM from', X, X, 00:20, Alarm, NetApp test alarm appern
+NetAppRawFileSize1 = 8, 50, 5
+NetApp2 = Socket 60002, Both, eth1, TCP, 60002
+NetAppScript2 = 
+NetAppCondition2.0 = 'L0.0', 1, On, 00:05, /home/cvuserapps/TestScript.sh, L010 alarm message
+NetAppRawFileSize2 = 8, 50, 5
+NetAppAlarmFileSize = 8, 50, 15
+SNMPTrapAppMode = Both
+SNMPTrapAppReceiverPort = eth0, udp, 162
+SNMPAppCondition0 = 'INFORM', X, X, 00:10, Alarm, SNMP TestSite alarm
+SNMPAppCondition1 = 'CVSite', X, X, 00:10, Alarm, SNMP Inputs alarm
+SNMPTrapAppRawFileSize = 8, 50, 5
+SNMPTrapAppAlarmFileSize = 8, 50, 5
+SyslogAppMode = Both
+SyslogAppReceiverPort = en0, tcp, 514
+SyslogAppCondition0 = 'sudo', X, X, 00:10, Alarm, sudo access
+SyslogAppCondition1 = 'L0.0', X, X, 00:10, Alarm, logger message
+SyslogAppCondition2 = 'Invalid user', X, X, 00:10, Alarm, failed login attempt
+SyslogAppCondition3 = 'Failed password', X, X, 00:10, Alarm, failed login attempt
+SyslogAppCondition4 = 'Accepted password', X, X, 00:10, Alarm, who is logging in
+SyslogAppRawFileSize = 8, 50, 5
+SyslogAppAlarmFileSize = 8, 50, 15
+SyslogAppLogEnable = No
+NetAppScript = 
+
+</NetApp>
+
+<FilePush>
+FilePushOption = select
+FilePushInterval = 15H
+FilePushInputs = both
+FilePushOutputs = raw
+FilePushAnalogs = both
+FilePush1Wire = both
+FilePushRS485 = both
+FilePushRS232 = Both
+FilePushNet = Both
+FilePushAlarms = Yes
+DestinationServerIP = 192.168.0.14
+DestinationServerPath = /home/ubuntu/test
+DestinationServerUserID = ubuntu
+DestinationServerUserPW = ubuntutc
+
+</FilePush>
+
