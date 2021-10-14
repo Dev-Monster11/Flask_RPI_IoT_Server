@@ -2051,7 +2051,7 @@ def utilities_modbus_discovery_post():
     
     (code, out, err) = wb.callApplication("cv_discover_rs485", argc)
     if code == 0:
-        return jsonify({"ActionResult": out.splitlines()}, 201, {"Content-Type": "application/json"})
+        return jsonify({"ActionResult": out.splitlines()}), {"Content-Type": "application/json"})
     else:
         return jsonify({"ActionResult": err}, 400, {"Content-Type": "application/json"})
 
@@ -2117,7 +2117,7 @@ def utilities_file_transfer_post():
     return jsonify({
         "TransferActivity": output.splitlines(),
         "TransferStatus" : code
-    }, 201
+    })
 
 @app.route("/utilities/map_html", methods=['POST'])
 def utilities_map_html_post():
@@ -2199,7 +2199,7 @@ def utilities_engineid_post():
     
     cf.save(cfg_file)
     
-    return jsonify({"snmpv3InfEngineID": cf.snmpv3InfEngineID}, 201, {"Content-Type": "application/json"}
+    return jsonify({"snmpv3InfEngineID": cf.snmpv3InfEngineID}), {"Content-Type": "application/json"}
 
 @app.route("/utilities/ping", methods=['POST'])
 def utilities_ping_post():
@@ -2213,7 +2213,7 @@ def utilities_ping_post():
         return jsonify({
             "out" : out.decode('utf-8').splitlines(),
             "err" : err.decode('utf-8')
-        }, 201
+        })
     except Exception as e:
         app.logger.warning("Ping error %s" % e)
         return jsonify({
