@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import render_template
 from flask import send_from_directory
 from flask import stream_with_context
