@@ -2051,7 +2051,7 @@ def utilities_modbus_discovery_post():
     
     (code, out, err) = wb.callApplication("cv_discover_rs485", argc)
     if code == 0:
-        return jsonify({"ActionResult": out.splitlines()}))
+        return jsonify({"ActionResult": out.splitlines()})
     else:
         return jsonify({"ActionResult": err}, 400)
 
