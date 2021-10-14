@@ -51,7 +51,7 @@ dictConfig({
     'handlers': {
         'file.handler': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/flask.log',
+            'filename': '/home/pi/flask.log',
             'maxBytes': 1000000,
             'backupCount': 2,
             'level': 'DEBUG',
@@ -186,24 +186,24 @@ def site_info():
              "wire1" : str(len(cf.OneWireDeviceID)) if cf.OneWireAppEnable else "-",
              "network": net_apps,
              "mapiframe" : iframe
-    })#, 200
+    })#)
 
 @app.route("/dashboard/notification", methods=['GET'])
 def notification():
-    return {
+    return jsonify({
         "email" : "ON" if cf.EmailNotificationEn else "OFF",
         "snmp" : "ON" if cf.SNMPNotificationEn  else "OFF",
         "post" : "ON" if cf.httpPostNotificationEn else "OFF",
         "syslog" : "ON" if cf.RsyslogNotificationEn else "OFF"
-    }, 200
+    })
 
 @app.route("/dashboard/resources", methods=['GET'])
 def resourses():
-    return {
+    return jsonify({
         "temp"  : get_cpu_temp(),
         "ram"   : int(psutil.virtual_memory().free/(1024*1024)),
         "flash" : int(psutil.disk_usage('/').free/(1024*1024))
-    }, 200
+    })
 
 
 @app.route("/dashboard/access", methods=['GET'])
@@ -212,20 +212,20 @@ def access():
     if r[0] != 0:
         app.logger.debug("Error:", r[2])
     
-    return {
+    return jsonify({
         "LastLogin": r[1],
         "firewall" : "ON" if cf.FirewallAppEnable else "OFF",
         "2fa"   : "ON" if cf.Access2FAEnable else "OFF",
         "ga2fa" : "ON" if cf.Access2FAGoogleEnable else "OFF"
-    }, 200
+    })
 
 @app.route("/dashboard/inputs", methods=['GET'])
 def inputs():
     (i, pf) = wb.readInput()
     
-    return {
+    return jsonify({
         "inputs" :  i[0] if i is not None and len(i) > 0 else ""
-    }, 200
+    })
 
 @app.route("/dashboard/outputs", methods=['GET'])
 def outputs():
@@ -242,14 +242,14 @@ def outputs():
 
     s= "" if o is None or len(o) == 0 else o[0]
 
-    return {
+    return jsonify({
         "out0": out(s, 0),
         "out1": out(s, 1),
         "out2": out(s, 2),
         "out3": out(s, 3),
         "out4": out(s, 4),
         "out5": out(s, 5)
-    }, 200
+    })
 
 @app.route("/dashboard/analogs", methods=['GET'])
 def analogs():
@@ -264,9 +264,9 @@ def analogs():
 
     s= "" if a is None or len(a) == 0 else a[0]
         
-    return {
+    return jsonify({
         "analogs": s
-    }, 200
+    })
 
 @app.route("/dashboard/1wire", methods=['GET'])
 def one_wire():
@@ -319,11 +319,11 @@ def netapp():
         i += 1 if len(cf.SyslogAppMode) > 0 and cf.SyslogAppMode.lower() != "none" else 0
         net_apps = str(i)
 
-    return {
+    return jsonify({
         "netcount" : net_apps,
         "snmpcount": 1 if len(cf.SNMPTrapAppMode) > 0 and cf.SNMPTrapAppMode.lower() != "none" else 0,
         "syslogcount": 1 if len(cf.SyslogAppMode) > 0 and cf.SyslogAppMode.lower() != "none" else 0,
-    }, 200
+    })
 
 @app.route("/dashboard/netapp/snmp", methods=['GET'])
 def netapp_snmp():
@@ -383,7 +383,7 @@ def today_alarms():
     except Exception as e:
         app.logger.warning ("Error at today_alarms: %s" % e)
     
-    return {
+    return jsonify({
         "total"  : today_total,
         "inputs" : today_inputs,
         "analogs": today_analog,
@@ -391,7 +391,7 @@ def today_alarms():
         "rs485"  : today_rs485,
         "wire1"  : today_one_wire,
         "network": today_net
-    }, 200
+    })
 
 @app.route("/dashboard/recent_alarms", methods=['GET'])
 def recent_alarms():
@@ -403,9 +403,9 @@ def recent_alarms():
     except Exception as e:
         app.logger.warning ("Error at recent_alarms: %s" % e)
         
-    return {
+    return jsonify({
         "recent" : recent_alarms
-    }, 200
+    })
 
 @app.route("/dashboard/alarm_distribution", methods=['GET'])
 def alarm_distribution():
@@ -440,14 +440,14 @@ def alarm_distribution():
     except Exception as e:
         app.logger.warning ("Error at alarm_distribution: %s" % e)
         
-    return {
+    return jsonify({
         "inputs"  : cvInputsAlarmInt,
         "analogs" : cvAnalogsAlarmInt,
         "rs485"   : cvRS485AlarmInt,
         "rs232"   : cvRS232AlarmInt,
         "wire1"   : cv1WireAlarmInt,
         "network"  : cvNetAppAlarmInt
-    }, 200
+    })
 
 @app.route("/dashboard/data_distribution", methods=['GET'])
 def data_distribution():
@@ -480,7 +480,7 @@ def data_distribution():
         elif i.startswith("cvNetAppRaw"):
             network += sz
 
-    return {
+    return jsonify({
         "inputs" : inputs,
         "outputs": outputs,
         "analogs": analogs,
@@ -488,18 +488,18 @@ def data_distribution():
         "rs232"  : rs232,
         "wire1"  : wire1,
         "network": network
-    }, 200
+    })
 
 @app.route("/configuration/site_info", methods=['GET'])
 def configuration_site_info():
-    return {
+    return jsonify({
         "SiteName" : cf.SiteName,
         "SiteID" : cf.SiteID,
         "SiteCoordinates" : cf.SiteCoordinates,
         "SiteContactEmail" : cf.SiteContactEmail,
         "SiteAddress" : cf.SiteAddress,
         "SiteRemarks" : cf.SiteRemarks
-    }, 200
+    })
 
 @app.route("/configuration/site_info", methods=['POST'])
 def configuration_site_info_post():
@@ -522,7 +522,7 @@ def configuration_site_info_post():
 @app.route("/configuration/date_time", methods=['GET'])
 def configuration_date_time():
 
-    return {
+    return jsonify({
         "currentdate" : strftime("%Y-%m-%d", gmtime()),
         "currenttime" : strftime("%H:%M:%S", gmtime()),
         "NTPServer"   : cf.NTPServer,
@@ -532,7 +532,7 @@ def configuration_date_time():
         "TimeAuto"    : cf.TimeAuto,
         "DSTAuto"     : cf.DSTAuto,
         "synctime"    : strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    }, 200
+    })
 
 @app.route("/configuration/date_time", methods=['POST'])
 def configuration_date_time_post():
@@ -573,14 +573,14 @@ def configuration_date_time_post():
 @app.route("/configuration/networking", methods=['GET'])
 def configuration_networking():
 
-    return {
+    return jsonify({
         "Eth0WANIP" : cf.Eth0WANIP,
         "Eth0WANNetMask" : cf.Eth0WANNetMask,
         "Eth1LANIP" : cf.Eth1LANIP,
         "Eth1LANNetMask" : cf.Eth1LANNetMask,
         "GatewayIP" : cf.GatewayIP,
         "DNSServer" : cf.DNS
-    }, 200
+    })
 
 @app.route("/configuration/networking", methods=['POST'])
 def configuration_networking_post():
@@ -604,10 +604,10 @@ def configuration_networking_post():
 @app.route("/configuration/access_security/firewall", methods=['GET'])
 def configuration_access_security_firewall():
 
-    return {
+    return jsonify({
         "FirewallAppEnable" : cf.FirewallAppEnable,
         "FirewallIP"        : cf.FirewallAdminIP
-    }, 200
+    })
         
 @app.route("/configuration/access_security/firewall", methods=['POST'])
 def configuration_access_security_firewall_post():
@@ -624,10 +624,10 @@ def configuration_access_security_firewall_post():
 @app.route("/configuration/access_security/password", methods=['GET'])
 def configuration_access_security_password():
 
-    return {
+    return jsonify({
         "AccessPWComplexityEnable" : cf.AccessPWComplexityEnable,
         "AccessPWLifetimeEnable"   : cf.AccessPWLifetimeEnable
-    }, 200
+    })
  
 @app.route("/configuration/access_security/password", methods=['POST'])
 def configuration_access_security_password_post():
@@ -644,11 +644,11 @@ def configuration_access_security_password_post():
 @app.route("/configuration/access_security/authentication", methods=['GET'])
 def configuration_access_security_authentication():
 
-    return {
+    return jsonify({
         "Access2FAEnable" : cf.Access2FAEnable,
         "Access2FATimer"  : cf.Access2FATimer,
         "Access2FAGoogleEnable" : cf.Access2FAGoogleEnable
-    }, 200
+    })
 
 @app.route("/configuration/access_security/authentication", methods=['POST'])
 def configuration_access_security_authentication_post():
@@ -664,7 +664,7 @@ def configuration_access_security_authentication_post():
 
 @app.route("/configuration/file_push", methods=['GET'])
 def configuration_file_push():
-    return {
+    return jsonify({
         "FilePushOption" : cf.FilePushOption,
         "FilePushInterval" : cf.FilePushInterval,
         "FilePushInputs"   : cf.FilePushInputs,
@@ -679,7 +679,7 @@ def configuration_file_push():
         "DestinationServerPath" : cf.DestinationServerPath,
         "DestinationServerUserID" : cf.DestinationServerUserID,
         "DestinationServerUserPW" : cf.DestinationServerUserPW
-    }, 200
+    })
 
 @app.route("/configuration/file_push", methods=['POST'])
 def configuration_file_push_post():
@@ -708,7 +708,7 @@ def configuration_file_push_post():
         
 @app.route("/configuration/snmp_agent/general", methods=['GET'])
 def configuration_snmp_agent_general():
-    return {
+    return jsonify({
         "SNMPAgentEnable" : cf.SNMPAgentEnable,
         "SNMPDSysLocation" : cf.SNMPDSysLocation,
         "SNMPDSysContact" : cf.SNMPDSysContact,
@@ -716,7 +716,7 @@ def configuration_snmp_agent_general():
         "SNMPDSysObjectID" : cf.SNMPDSysObjectID,
         "SNMPDv12Community" : cf.SNMPDv12Community,
         "SNMPDv3EngineID" : cf.SNMPDv3EngineID
-    }, 200
+    })
 
 @app.route("/configuration/snmp_agent/general", methods=['POST'])
 def configuration_snmp_agent_general_post():
@@ -736,7 +736,7 @@ def configuration_snmp_agent_general_post():
 
 @app.route("/configuration/snmp_agent/user", methods=['GET'])
 def configuration_snmp_agent_user():
-    return {
+    return jsonify({
         "SNMPDv3SecurityName0" : cf.SNMPDv3SecurityName0,
         "SNMPDv3AuthProtocol0" : cf.SNMPDv3AuthProtocol0,
         "SNMPDv3AuthKey0" : cf.SNMPDv3AuthKey0,
@@ -752,7 +752,7 @@ def configuration_snmp_agent_user():
         "SNMPDv3AuthKey2" : cf.SNMPDv3AuthKey2,
         "SNMPDv3PrivProtocol2" : cf.SNMPDv3PrivProtocol2,
         "SNMPDv3PrivKey2" : cf.SNMPDv3PrivKey2
-    }, 200
+    })
 
 @app.route("/configuration/snmp_agent/user", methods=['POST'])
 def configuration_snmp_agent_user_post():
@@ -782,7 +782,7 @@ def configuration_snmp_agent_user_post():
         
 @app.route("/configuration/system_supervision", methods=['GET'])
 def configuration_system_supervision():
-    return {
+    return jsonify({
         "SysHeartbeatReportInterval": cf.SysHeartbeatReportInterval,
         "Eth0LinkRestartInterval" : cf.Eth0LinkRestartInterval,
         "Eth1LinkRestartInterval" : cf.Eth1LinkRestartInterval,
@@ -790,7 +790,7 @@ def configuration_system_supervision():
         "SoftRestartSchedule" : cf.SoftRestartSchedule,
         "SystemRebootSchedule": cf.SystemRebootSchedule,
         "SystemSupervisorScript": cf.SystemSupervisorScript
-    }, 200
+    })
 
 @app.route("/configuration/system_supervision", methods=['POST'])
 def configuration_system_supervision_post():
@@ -812,7 +812,7 @@ def configuration_system_supervision_post():
         
 @app.route("/configuration/alarm_monitoring/variables", methods=['GET'])
 def configuration_alarm_monitoring_variables():
-    return {
+    return jsonify({
         "SiteName" : cf.AlarmAtSiteName,
         "SiteID": cf.AlarmAtSiteID,
         "SiteIP": cf.AlarmAtSiteIP,
@@ -826,7 +826,7 @@ def configuration_alarm_monitoring_variables():
         "AlarmValue" : cf.AlarmAtAlarmValue,
         "AlarmName"  : cf.AlarmAtAlarmName,
         "AlarmDescription": cf.AlarmAtAlarmDescription
-    }, 200
+    })
 
 @app.route("/configuration/alarm_monitoring/variables", methods=['POST'])
 def configuration_alarm_monitoring_variables_post():
@@ -853,7 +853,7 @@ def configuration_alarm_monitoring_variables_post():
 
 @app.route("/configuration/alarm_monitoring/email_notification", methods=['GET'])
 def configuration_alarm_monitoring_email_notification():
-    return {
+    return jsonify({
         "EmailNotificationEnable": cf.EmailNotificationEn,
         "EmailTo" : cf.EmailTo,
         "EmailCC" : cf.EmailCC,
@@ -876,7 +876,7 @@ def configuration_alarm_monitoring_email_notification():
         "smtpAuthUser" : cf.smtpAuthUser,
         "smtpAuthPass" : cf.smtpAuthPass,
         "smtpAuthMethod" : cf.smtpAuthMethod
-    }, 200
+    })
 
 @app.route("/configuration/alarm_monitoring/email_notification", methods=['POST'])
 def configuration_alarm_monitoring_email_notification_post():
@@ -911,10 +911,10 @@ def configuration_alarm_monitoring_email_notification_post():
 
 @app.route("/configuration/alarm_monitoring/http_notification", methods=['GET'])
 def configuration_alarm_monitoring_http_notification():
-    return {
+    return jsonify({
         "httpPostNotificationEnable" : cf.httpPostNotificationEn,
         "httpPostURL": cf.httpPostURL
-    }, 200
+    })
 
 @app.route("/configuration/alarm_monitoring/http_notification", methods=['POST'])
 def configuration_alarm_monitoring_http_notification_post():
@@ -929,7 +929,7 @@ def configuration_alarm_monitoring_http_notification_post():
 
 @app.route("/configuration/alarm_monitoring/snmp_notification", methods=['GET'])
 def configuration_alarm_monitoring_snmp_notification():
-    return {
+    return jsonify({
         "SNMPNotificationEnable": cf.SNMPNotificationEn,
         "snmpManagerIP": cf.snmpManagerIP,
         "snmpNotificationType": cf.snmpNotificationType,
@@ -942,7 +942,7 @@ def configuration_alarm_monitoring_snmp_notification():
         "snmpv3AuthKey": cf.snmpv3AuthKey,
         "snmpv3PrivProtocol": cf.snmpv3PrivProtocol,
         "snmpv3PrivKey": cf.snmpv3PrivKey
-    }, 200
+    })
 
 @app.route("/configuration/alarm_monitoring/snmp_notification", methods=['POST'])
 def configuration_alarm_monitoring_snmp_notification_post():
@@ -967,10 +967,10 @@ def configuration_alarm_monitoring_snmp_notification_post():
 
 @app.route("/configuration/alarm_monitoring/syslog_notification", methods=['GET'])
 def configuration_alarm_monitoring_syslog_notification():
-    return {
+    return jsonify({
         "RsyslogNotificationEnable": cf.RsyslogNotificationEn,
         "RsyslogServer": cf.RsyslogServer
-    }, 200
+    })
 
 @app.route("/configuration/alarm_monitoring/syslog_notification", methods=['POST'])
 def configuration_alarm_monitoring_syslog_notification_post():
@@ -986,12 +986,12 @@ def configuration_alarm_monitoring_syslog_notification_post():
 
 @app.route("/configuration/inputs_app/general", methods=['GET'])
 def configuration_inputs_app_general():
-    return {
+    return jsonify({
         "InputsAppEnable": cf.InputsAppEnable,
         "InputPollInterval": cf.InputPollInterval,
         "InputsRawFileSize": cf.InputsRawFileSize,
         "InputsScript": cf.InputsScript
-    }, 200
+    })
 
 @app.route("/configuration/inputs_app/general", methods=['POST'])
 def configuration_inputs_app_general_post():
@@ -1011,9 +1011,9 @@ def configuration_inputs_app_general_post():
 
 @app.route("/configuration/inputs_app/noniso_names", methods=['GET'])
 def configuration_inputs_app_noniso_names():
-    return {
+    return jsonify({
         "InputName" : cf.InputName[0:4]
-    }, 200
+    })
 
 @app.route("/configuration/inputs_app/noniso_names", methods=['POST'])
 def configuration_inputs_app_noniso_names_post():
@@ -1042,9 +1042,9 @@ def configuration_inputs_app_iso_names():
         except Exception as e:
             app.logger.debug ("Got error in seting iso_names (%s), skiping..." % e)
             
-    return {
+    return jsonify({
         "Groups": r
-    }, 200
+    })
 
 @app.route("/configuration/inputs_app/iso_names", methods=['POST'])
 def configuration_inputs_app_iso_names_post():
@@ -1097,9 +1097,9 @@ def configuration_inputs_app_alarm_definitions():
         except Exception as e:
             app.logger.debug ("Got error in seting alarm_definitions (%s), skiping..." % e)
 
-    return {
+    return jsonify({
         "Groups": r
-    }, 200
+    })
 
 @app.route("/configuration/inputs_app/alarm_definitions", methods=['POST'])
 def configuration_inputs_app_alarm_definitions_post():
@@ -1132,17 +1132,17 @@ def configuration_inputs_app_parser():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
     
-    return {
+    return jsonify({
         "InputsParser" : stdout.splitlines()
-    }, 200
+    })
 
 @app.route("/configuration/outputs_app/general", methods=['GET'])
 def configuration_outputs_app_general():
-    return {
+    return jsonify({
         "OutputAppEnable": cf.OutputsAppEnable,
         "OutputPollInterval": cf.OutputPollInterval,
         "OutputsRawFileSize": cf.OutputsRawFileSize,
-    }, 200
+    })
 
 @app.route("/configuration/outputs_app/general", methods=['POST'])
 def configuration_outputs_app_general_post():
@@ -1159,9 +1159,9 @@ def configuration_outputs_app_general_post():
 
 @app.route("/configuration/outputs_app/output_names", methods=['GET'])
 def configuration_outputs_app_output_names():
-    return {
+    return jsonify({
         "OutputName" : cf.OutputName
-    }, 200
+    })
 
 @app.route("/configuration/outputs_app/output_names", methods=['POST'])
 def configuration_outputs_app_output_names_post():
@@ -1176,9 +1176,9 @@ def configuration_outputs_app_output_names_post():
 
 @app.route("/configuration/outputs_app/output_default", methods=['GET'])
 def configuration_outputs_app_output_default():
-    return {
+    return jsonify({
         "OutputDefault" : cf.OutputDefault
-    }, 200
+    })
 
 @app.route("/configuration/outputs_app/output_default", methods=['POST'])
 def configuration_outputs_app_output_default_post():
@@ -1199,19 +1199,19 @@ def configuration_outputs_app_parser():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
         
-    return {
+    return jsonify({
         "OutputsParser" :stdout.splitlines()
-    }, 200
+    })
 
 @app.route("/configuration/analogs_app/general", methods=['GET'])
 def configuration_analogs_app_general():
-    return {
+    return jsonify({
         "AnalogsAppEnable" :  cf.AnalogsAppEnable,
         "AnalogPollInterval": cf.AnalogPollInterval,
         "AnalogsRawFileSize": cf.AnalogsRawFileSize,
         "AnalogsAlarmFileSize": cf.AnalogsAlarmFileSize,
         "AnalogsScript": cf.AnalogsScript
-     }, 200
+     })
 
 @app.route("/configuration/analogs_app/general", methods=['POST'])
 def configuration_analogs_app_general_post():
@@ -1233,9 +1233,9 @@ def configuration_analogs_app_general_post():
 
 @app.route("/configuration/analogs_app/analog_names", methods=['GET'])
 def configuration_analogs_app_analog_names():
-    return {
+    return jsonify({
         "AnalogName": cf.AnalogName
-     }, 200
+     })
 
 @app.route("/configuration/analogs_app/analog_names", methods=['POST'])
 def configuration_analogs_app_analog_names_post():
@@ -1251,9 +1251,9 @@ def configuration_analogs_app_analog_names_post():
 
 @app.route("/configuration/analogs_app/analog_offsets", methods=['GET'])
 def configuration_analogs_app_analog_offsets():
-    return {
+    return jsonify({
         "AnalogCalOffset": cf.AnalogCalOffset
-     }, 200
+     })
 
 @app.route("/configuration/analogs_app/analog_offsets", methods=['POST'])
 def configuration_analogs_app_analog_offsets_post():
@@ -1268,9 +1268,9 @@ def configuration_analogs_app_analog_offsets_post():
 
 @app.route("/configuration/analogs_app/analog_converters", methods=['GET'])
 def configuration_analogs_app_analog_converters():
-    return {
+    return jsonify({
         "AnalogConverter": cf.AnalogConverter
-     }, 200
+     })
 
 @app.route("/configuration/analogs_app/analog_converters", methods=['POST'])
 def configuration_analogs_app_analog_converters_post():
@@ -1312,9 +1312,9 @@ def configuration_analogs_app_alarm_definitions():
         except Exception as e:
             app.logger.debug ("Got error in seting alarm_definitions (%s), skiping..." % e)
 
-    return {
+    return jsonify({
         "Groups": r
-    }, 200
+    })
 
 
 @app.route("/configuration/analogs_app/alarm_definitions", methods=['POST'])
@@ -1347,19 +1347,19 @@ def configuration_analogs_app_parser():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
     
-    return {
+    return jsonify({
         "AnalogsParser" : stdout.splitlines()
-    }, 200
+    })
 
 
 @app.route("/configuration/1wire_app/general", methods=['GET'])
 def configuration_1wire_app_general():
-    return {
+    return jsonify({
         "Wire1AppEnable" :  cf.OneWireAppEnable,
         "Wire1PollInterval" : cf.OneWirePollInterval,
         "Wire1AlarmFileSize": cf.OneWireAlarmFileSize,
         "Wire1Script": cf.OneWireScript
-      }, 200
+      })
 
 @app.route("/configuration/1wire_app/general", methods=['POST'])
 def configuration_1wire_app_general_post():
@@ -1379,7 +1379,7 @@ def configuration_1wire_app_general_post():
 @app.route("/configuration/1wire_app/alarm_definitions", methods=['GET'])
 def configuration_1wire_app_alarm_definitions():
 
-    return {
+    return jsonify({
         "Wire1DeviceName" :  cf.OneWireDeviceName,
         "Wire1DeviceID" : cf.OneWireDeviceID,
         "Wire1UoM" : cf.OneWireUoM,
@@ -1387,7 +1387,7 @@ def configuration_1wire_app_alarm_definitions():
         "Wire1Scripts" :  cf.OneWireScripts,
         "Wire1Condition" : cf.OneWireCondition,
         "Wire1Script" : cf.OneWireScript,
-    }, 200
+    })
 
 @app.route("/configuration/1wire_app/alarm_definitions", methods=['POST'])
 def configuration_1wire_app_alarm_definitions_post():
@@ -1419,17 +1419,17 @@ def configuration_1wire_app_parser():
                            % (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
     
-    return {
+    return jsonify({
         "Wire1Parser": stdout.splitlines()
-    }, 200
+    })
 
 @app.route("/configuration/rs232_app/general", methods=['GET'])
 def configuration_rs232_app_general():
-    return {
+    return jsonify({
         "SerialAppEnable" : cf.SerialsAppEnable,
         "SerialAlarmFileSize": cf.SerialAlarmFileSize,
         "SerialScript": cf.SerialScript
-    }, 200
+    })
 
 @app.route("/configuration/rs232_app/general", methods=['POST'])
 def configuration_rs232_app_general_post():
@@ -1446,7 +1446,7 @@ def configuration_rs232_app_general_post():
 
 @app.route("/configuration/rs232_app/device_configuration", methods=['GET'])
 def configuration_rs232_app_device_configuration():
-    return {
+    return jsonify({
         #"SelectPort":
         "SerialName" : cf.SerialName,
         "SerialMode" : cf.SerialMode,
@@ -1456,7 +1456,7 @@ def configuration_rs232_app_device_configuration():
         "IP2Serial" : cf.IP2Serial,
         "SerialRawFileSize" : cf.SerialRawFileSize,
         "SerialScript" : cf.SerialScript
-    }, 200
+    })
 
 @app.route("/configuration/rs232_app/device_configuration", methods=['POST'])
 def configuration_rs232_app_device_configuration_post():
@@ -1479,11 +1479,11 @@ def configuration_rs232_app_device_configuration_post():
 
 @app.route("/configuration/rs232_app/alarm_definitions", methods=['GET'])
 def configuration_rs232_app_alarm_definition():
-    return {
+    return jsonify({
         #"SelectPort":
         "Condition" : cf.Condition,
         "SerialScript" : cf.SerialScript
-    }, 200
+    })
 
 @app.route("/configuration/rs232_app/alarm_definitions", methods=['POST'])
 def configuration_rs232_app_alarm_definition_post():
@@ -1505,19 +1505,19 @@ def configuration_rs232_app_parser():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
 
-    return {
+    return jsonify({
         "RS232Parser": stdout.splitlines()
 
-    }, 200
+    })
 
 @app.route("/configuration/rs485_app/general", methods=['GET'])
 def configuration_rs485_app_general():
-    return {
+    return jsonify({
         "RS485AppEnable" : cf.RS485AppEnable,
         "RS485PollInterval" : cf.RS485PollInterval,
         "RS485AlarmFileSize" : cf.RS485AlarmFileSize,
         "RS485Script" : cf.RS485Script
-      }, 200
+      })
 
 @app.route("/configuration/rs485_app/general", methods=['POST'])
 def configuration_rs485_app_general_post():
@@ -1535,7 +1535,7 @@ def configuration_rs485_app_general_post():
 
 @app.route("/configuration/rs485_app/device_configuration", methods=['GET'])
 def configuration_rs485_app_device_configuration():
-    return {
+    return jsonify({
         "SelectDevice": "",
         "SelectPort":  "",
         "P0_RS485DeviceName" : cf.P0_RS485DeviceName,
@@ -1550,7 +1550,7 @@ def configuration_rs485_app_device_configuration():
         "P1_RS485RawFileSize" : cf.P1_RS485RawFileSize,
         "P0_RS485Script" : cf.P0_RS485Script,
         "P1_RS485Script" : cf.P1_RS485Script
-      }, 200
+      })
 
 @app.route("/configuration/rs485_app/device_configuration", methods=['POST'])
 def configuration_rs485_app_device_configuration_post():
@@ -1579,7 +1579,7 @@ def configuration_rs485_app_device_configuration_post():
 
 @app.route("/configuration/rs485_app/modbus_mapping", methods=['GET'])
 def configuration_rs485_app_modbus_mapping():
-    return {
+    return jsonify({
         "P0_ReadData" : cf.P0_ReadData,
         "P1_ReadData" : cf.P1_ReadData,
         "P0_RS485Record" : cf.P0_RS485Record,
@@ -1587,7 +1587,7 @@ def configuration_rs485_app_modbus_mapping():
         "*Var" : cf.Var,
         "P0_RS485RecordDescription" : cf.P0_RS485RecordDescription,
         "P1_RS485RecordDescription" : cf.P1_RS485RecordDescription
-      }, 200
+      })
 
 @app.route("/configuration/rs485_app/modbus_mapping", methods=['POST'])
 def configuration_rs485_app_modbus_mapping_post():
@@ -1608,12 +1608,12 @@ def configuration_rs485_app_modbus_mapping_post():
 
 @app.route("/configuration/rs485_app/alarm_definitions", methods=['GET'])
 def configuration_rs485_app_alarm_definitions():
-    return {
+    return jsonify({
         "P0_RS485ConditionX.Y" : cf.P0_RS485Condition,
         "P1_RS485ConditionX.Y" : cf.P1_RS485Condition,
         "P0_RS485Script": cf.P0_RS485Script,
         "P1_RS485Script": cf.P1_RS485Script
-      }, 200
+      })
 
 @app.route("/configuration/rs485_app/alarm_definitions", methods=['POST'])
 def configuration_rs485_app_alarm_definitions_post():
@@ -1637,17 +1637,17 @@ def configuration_rs485_app_parser():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
 
-    return {
+    return jsonify({
         "RS485Parser" :  stdout.splitlines()
-      }, 200
+      })
 
 
 @app.route("/configuration/net_app/general", methods=['GET'])
 def configuration_net_app_general():
-    return {
+    return jsonify({
         "NetAppEnable" : cf.NetAppEnable,
         "NetAppScript" : cf.NetAppScript
-      }, 200
+      })
 
 @app.route("/configuration/net_app/general", methods=['POST'])
 def configuration_net_app_general_post():
@@ -1680,7 +1680,7 @@ def configuration_net_app_netapp_configuration():
 
     arr = array_split(cf.NetApp.value)
 
-    return {
+    return jsonify({
         "SelectNetApp" : "",
         "Name" : build_array(0, arr),
         "Mode" : build_array(1, arr),
@@ -1689,7 +1689,7 @@ def configuration_net_app_netapp_configuration():
         "Port": build_array(4, arr),
         "NetAppRawFileSize": cf.NetAppRawFileSize,
         "NetAppScript" : cf.NetAppScripts
-      }, 200
+      })
 
 @app.route("/configuration/net_app/netapp_configuration/<ind>", methods=['POST'])
 def configuration_net_app_netapp_configuration_post(ind):
@@ -1723,10 +1723,10 @@ def configuration_net_app_netapp_configuration_post(ind):
 
 @app.route("/configuration/net_app/alarm_definitions", methods=['GET'])
 def configuration_net_app_alarm_definitions():
-    return {
+    return jsonify({
         "NetAppConditionX.Y" : cf.NetAppCondition,
         "NetAppScript" : cf.NetAppScripts,
-      }, 200
+      })
 
 @app.route("/configuration/net_app/alarm_definitions", methods=['POST'])
 def configuration_net_app_alarm_definitions_post():
@@ -1749,14 +1749,14 @@ def configuration_net_app_snmptrap_configuration():
                            (cf.SNMPTrapAppReceiverPort, e))
         (interface, proto, port) = ("", "", "")
 
-    return {
+    return jsonify({
         "SNMPTrapAppMode" : cf.SNMPTrapAppMode,
         "Interface" : interface,
         "Protocol" : proto,
         "Port" : port,
         "SNMPTrapAppRawFileSize" : cf.SNMPTrapAppRawFileSize,
         "SNMPTrapAppAlarmFileSize": cf.SNMPTrapAppAlarmFileSize
-      }, 200
+      })
 
 @app.route("/configuration/net_app/snmptrap_configuration", methods=['POST'])
 def configuration_net_app_snmptrap_configuration_post():
@@ -1779,10 +1779,10 @@ def configuration_net_app_snmptrap_configuration_post():
 @app.route("/configuration/net_app/snmp_alarm_definitions", methods=['GET'])
 def configuration_net_app_snmp_alarm_definitions():
 
-    return {
+    return jsonify({
         "IndexedCond" : cf.SNMPAppCondition,
         #"IndexedScript": cf.IndexedScript 
-      }, 200
+      })
 
 @app.route("/configuration/net_app/snmp_alarm_definitions", methods=['POST'])
 def configuration_net_app_snmp_alarm_definitions_post():
@@ -1798,12 +1798,12 @@ def configuration_net_app_snmp_alarm_definitions_post():
 @app.route("/configuration/net_app/syslog_configuration", methods=['GET'])
 def configuration_net_app_syslog_configuration():
 
-    return {
+    return jsonify({
         "SyslogAppMode" : cf.SyslogAppMode,
         "SyslogAppRawFileSize" : cf.SyslogAppRawFileSize,
         "SyslogAppAlarmFileSize": cf.SyslogAppAlarmFileSize,
         "SyslogAppLogEnable" : cf.SyslogAppLogEnable
-      }, 200
+      })
 
 @app.route("/configuration/net_app/syslog_configuration", methods=['POST'])
 def configuration_net_app_syslog_configuration_post():
@@ -1824,10 +1824,10 @@ def configuration_net_app_syslog_configuration_post():
 @app.route("/configuration/net_app/syslog_alarm_definitions", methods=['GET'])
 def configuration_net_app_syslog_alarm_definitions():
 
-    return {
+    return jsonify({
         "IndexedCond" : cf.SyslogAppCondition,
         "IndexedScript": ""
-      }, 200
+      })
 
 @app.route("/configuration/net_app/syslog_alarm_definitions", methods=['POST'])
 def configuration_net_app_syslog_alarm_definitions_post():
@@ -1849,9 +1849,9 @@ def configuration_net_app_parser():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
 
-    return {
+    return jsonify({
         "NetAppParser":  stdout.splitlines()
-      }, 200
+      })
 
 @app.route("/monitor/realtime_data/<device>", methods=['GET'])
 def monitor_realtime_data(device):
@@ -1931,10 +1931,10 @@ def control_outputs():
 
     (output, pf) = wb.readOutput()
     
-    return {
+    return jsonify({
         "CurrentStates" : output,
         "SetOutput": []
-      }, 200
+      })
 
 @app.route("/control/outputs", methods=['POST'])
 def control_outputs_post():
@@ -1988,7 +1988,7 @@ def control_restart_post():
         wb.systemReboot()
 
     if "PowerCycle" in request.json and request.json["PowerCycle"]:
-        return {#::FIXME::
+        return jsonify({#::FIXME::
         }, 501
 
     return "OK", 201, {"Content-Type": "application/json"}
@@ -2018,9 +2018,9 @@ def utilities_1wire_discovery():
                            (code, stderr, stdout))
         return "Forbidden", 403, {"Content-Type": "application/json"}
 
-    return {
+    return jsonify({
         "Wire1List":  stdout.splitlines()
-      }, 200
+      })
 
 
 @app.route("/utilities/modbus_discovery", methods=['POST'])
@@ -2051,9 +2051,9 @@ def utilities_modbus_discovery_post():
     
     (code, out, err) = wb.callApplication("cv_discover_rs485", argc)
     if code == 0:
-        return {"ActionResult": out.splitlines()}, 201, {"Content-Type": "application/json"}
+        return jsonify({"ActionResult": out.splitlines()}, 201, {"Content-Type": "application/json"}
     else:
-        return {"ActionResult": err}, 400, {"Content-Type": "application/json"}
+        return jsonify({"ActionResult": err}, 400, {"Content-Type": "application/json"}
 
 @app.route("/utilities/data_backup", methods=['POST'])
 def utilities_data_backup_post():
@@ -2061,7 +2061,7 @@ def utilities_data_backup_post():
 
     if request.json["Push"]:
         app.logger.info("Not implemented yet")
-        return {}, 501
+        return jsonify({}, 501
     elif request.json["Backup"]:
         wb.runBackup()
         return "OK", 201, {"Content-Type": "application/json"}
@@ -2070,7 +2070,7 @@ def utilities_data_backup_post():
 
 @app.route("/utilities/sw_upgrade", methods=['POST'])
 def utilities_sw_upgrade_post():
-    return {
+    return jsonify({
         # ::FIXME:: Backup utility???
       }, 501
 
@@ -2087,9 +2087,9 @@ def utilities_file_transfer():
             arr[0] = d
             output.extend(arr)
             
-    return {
+    return jsonify({
         "FileListing" : output,
-    }, 200
+    })
 
 @app.route("/utilities/file_transfer", methods=['POST'])
 def utilities_file_transfer_post():
@@ -2114,7 +2114,7 @@ def utilities_file_transfer_post():
     else:
         return "Expectation Failed", 417, {"Content-Type": "application/json"}
 
-    return {
+    return jsonify({
         "TransferActivity": output.splitlines(),
         "TransferStatus" : code
     }, 201
@@ -2133,9 +2133,9 @@ def utilities_map_html_post():
 
 @app.route("/utilities/snmptraps", methods=['GET'])
 def utilities_snmptraps():
-    return {                  
+    return jsonify({                  
         "ListSNMP": cf.snmpManagerIP
-    }, 200
+    })
 
 @app.route("/utilities/snmptraps", methods=['POST'])
 def utilities_snmptraps_post():
@@ -2169,9 +2169,9 @@ def utilities_snmptraps_post():
                            
 @app.route("/utilities/engineID", methods=['GET'])
 def utilities_engineid():
-    return {
+    return jsonify({
         "snmpv3InfEngineID": cf.snmpv3InfEngineID
-      }, 200
+      })
 
 @app.route("/utilities/engineID", methods=['POST'])
 def utilities_engineid_post():
@@ -2199,7 +2199,7 @@ def utilities_engineid_post():
     
     cf.save(cfg_file)
     
-    return {"snmpv3InfEngineID": cf.snmpv3InfEngineID}, 201, {"Content-Type": "application/json"}
+    return jsonify({"snmpv3InfEngineID": cf.snmpv3InfEngineID}, 201, {"Content-Type": "application/json"}
 
 @app.route("/utilities/ping", methods=['POST'])
 def utilities_ping_post():
@@ -2210,32 +2210,32 @@ def utilities_ping_post():
     try:
         (code, out, err) = wb.callApplication("/bin/ping", args, sudo = False, path = "", timeout = 5)
 
-        return {
+        return jsonify({
             "out" : out.decode('utf-8').splitlines(),
             "err" : err.decode('utf-8')
         }, 201
     except Exception as e:
         app.logger.warning("Ping error %s" % e)
-        return {
+        return jsonify({
             "out" : "",
             "err" : str(e)
         }, 400 
 
 @app.route("/reports/charts_analogs", methods=['POST'])
 def reports_charts_analogs_post():
-    return {
+    return jsonify({
         # ::FIXME:: Backup utility???
       }, 501
 
 @app.route("/reports/charts_1wire", methods=['POST'])
 def reports_charts_1wire_post():
-    return {
+    return jsonify({
         # ::FIXME:: Backup utility???
       }, 501
 
 @app.route("/reports/charts_rs485", methods=['POST'])
 def reports_charts_rs485_post():
-    return {
+    return jsonify({
         # ::FIXME:: Backup utility???
       }, 501
 
