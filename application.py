@@ -505,7 +505,7 @@ def configuration_site_info():
 def configuration_site_info_post():
     app.logger.debug ("GOT:", request.json)
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SiteName.value = request.json["SiteName"]
     cf.SiteID.value = request.json["SiteID"]
@@ -516,7 +516,7 @@ def configuration_site_info_post():
 
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/date_time", methods=['GET'])
@@ -537,7 +537,7 @@ def configuration_date_time():
 @app.route("/configuration/date_time", methods=['POST'])
 def configuration_date_time_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     currentdate = None
     currenttime = None
@@ -567,7 +567,7 @@ def configuration_date_time_post():
 
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/networking", methods=['GET'])
@@ -585,7 +585,7 @@ def configuration_networking():
 @app.route("/configuration/networking", methods=['POST'])
 def configuration_networking_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     app.logger.debug (request.json)
     cf.Eth0WANIP.value = request.json["Eth0WANIP"]
@@ -598,7 +598,7 @@ def configuration_networking_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/access_security/firewall", methods=['GET'])
@@ -612,14 +612,14 @@ def configuration_access_security_firewall():
 @app.route("/configuration/access_security/firewall", methods=['POST'])
 def configuration_access_security_firewall_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.FirewallAppEnable.value = request.json["FirewallAppEnable"]
     cf.FirewallAdminIP.value = request.json["FirewallIP"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
  
 @app.route("/configuration/access_security/password", methods=['GET'])
 def configuration_access_security_password():
@@ -632,14 +632,14 @@ def configuration_access_security_password():
 @app.route("/configuration/access_security/password", methods=['POST'])
 def configuration_access_security_password_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.AccessPWComplexityEnable.value = request.json[ "AccessPWComplexityEnable"]
     cf.AccessPWLifetimeEnable.value = request.json["AccessPWLifetimeEnable"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/access_security/authentication", methods=['GET'])
 def configuration_access_security_authentication():
@@ -653,14 +653,14 @@ def configuration_access_security_authentication():
 @app.route("/configuration/access_security/authentication", methods=['POST'])
 def configuration_access_security_authentication_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
     
     cf.Access2FAEnable.value = request.json["Access2FAEnable"]
     cf.Access2FATimer.value = request.json["Access2FATimer"]
     cf.Access2FAGoogleEnable.value = request.json["Access2FAGoogleEnable"]
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/file_push", methods=['GET'])
 def configuration_file_push():
@@ -684,7 +684,7 @@ def configuration_file_push():
 @app.route("/configuration/file_push", methods=['POST'])
 def configuration_file_push_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.FilePushOption.value   = request.json[  "FilePushOption"]
     cf.FilePushInterval.value = request.json["FilePushInterval"]
@@ -703,7 +703,7 @@ def configuration_file_push_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
         
 @app.route("/configuration/snmp_agent/general", methods=['GET'])
@@ -721,7 +721,7 @@ def configuration_snmp_agent_general():
 @app.route("/configuration/snmp_agent/general", methods=['POST'])
 def configuration_snmp_agent_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SNMPAgentEnable.value = request.json["SNMPAgentEnable"]
     cf.SNMPDSysLocation.value = request.json["SNMPDSysLocation"]
@@ -732,7 +732,7 @@ def configuration_snmp_agent_general_post():
     cf.SNMPDv3EngineID.value = request.json[ "SNMPDv3EngineID"]
 
     cf.save(cfg_file)
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/snmp_agent/user", methods=['GET'])
 def configuration_snmp_agent_user():
@@ -757,7 +757,7 @@ def configuration_snmp_agent_user():
 @app.route("/configuration/snmp_agent/user", methods=['POST'])
 def configuration_snmp_agent_user_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SNMPDv3SecurityName0.value  = request.json["SNMPDv3SecurityName0"]
     cf.SNMPDv3AuthProtocol0.value  = request.json["SNMPDv3AuthProtocol0"]
@@ -777,7 +777,7 @@ def configuration_snmp_agent_user_post():
         
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
         
 @app.route("/configuration/system_supervision", methods=['GET'])
@@ -795,7 +795,7 @@ def configuration_system_supervision():
 @app.route("/configuration/system_supervision", methods=['POST'])
 def configuration_system_supervision_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
     
     cf.SysHeartbeatReportInterval.value  = request.json["SysHeartbeatReportInterval"]
     cf.Eth0LinkRestartInterval.value = request.json["Eth0LinkRestartInterval"]
@@ -807,7 +807,7 @@ def configuration_system_supervision_post():
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
         
 @app.route("/configuration/alarm_monitoring/variables", methods=['GET'])
@@ -831,7 +831,7 @@ def configuration_alarm_monitoring_variables():
 @app.route("/configuration/alarm_monitoring/variables", methods=['POST'])
 def configuration_alarm_monitoring_variables_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.AlarmAtSiteName.value = request.json["SiteName"]
     cf.AlarmAtSiteID.value = request.json["SiteID"]
@@ -849,7 +849,7 @@ def configuration_alarm_monitoring_variables_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/alarm_monitoring/email_notification", methods=['GET'])
 def configuration_alarm_monitoring_email_notification():
@@ -881,7 +881,7 @@ def configuration_alarm_monitoring_email_notification():
 @app.route("/configuration/alarm_monitoring/email_notification", methods=['POST'])
 def configuration_alarm_monitoring_email_notification_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.EmailNotificationEn.value = request.json["EmailNotificationEnable"]
     cf.EmailTo.value = request.json["EmailTo"]
@@ -907,7 +907,7 @@ def configuration_alarm_monitoring_email_notification_post():
     cf.smtpAuthMethod.value = request.json["smtpAuthMethod"]
 
     cf.save(cfg_file)
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/alarm_monitoring/http_notification", methods=['GET'])
 def configuration_alarm_monitoring_http_notification():
@@ -919,13 +919,13 @@ def configuration_alarm_monitoring_http_notification():
 @app.route("/configuration/alarm_monitoring/http_notification", methods=['POST'])
 def configuration_alarm_monitoring_http_notification_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
     
     cf.httpPostNotificationEn.value = request.json["httpPostNotificationEnable"]
     cf.httpPostURL.value = request.json["httpPostURL"]
 
     cf.save(cfg_file)
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/alarm_monitoring/snmp_notification", methods=['GET'])
 def configuration_alarm_monitoring_snmp_notification():
@@ -947,7 +947,7 @@ def configuration_alarm_monitoring_snmp_notification():
 @app.route("/configuration/alarm_monitoring/snmp_notification", methods=['POST'])
 def configuration_alarm_monitoring_snmp_notification_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SNMPNotificationEn.value = request.json["SNMPNotificationEnable"]
     cf.snmpManagerIP.value      = request.json["snmpManagerIP"]
@@ -963,7 +963,7 @@ def configuration_alarm_monitoring_snmp_notification_post():
     cf.snmpv3PrivKey.value      = request.json["snmpv3PrivKey"]
 
     cf.save(cfg_file)
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/alarm_monitoring/syslog_notification", methods=['GET'])
 def configuration_alarm_monitoring_syslog_notification():
@@ -975,13 +975,13 @@ def configuration_alarm_monitoring_syslog_notification():
 @app.route("/configuration/alarm_monitoring/syslog_notification", methods=['POST'])
 def configuration_alarm_monitoring_syslog_notification_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.RsyslogNotificationEn.value = request.json["RsyslogNotificationEnable"]
     cf.RsyslogServer.value = request.json["RsyslogServer"]
 
     cf.save(cfg_file)
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/inputs_app/general", methods=['GET'])
@@ -996,7 +996,7 @@ def configuration_inputs_app_general():
 @app.route("/configuration/inputs_app/general", methods=['POST'])
 def configuration_inputs_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     #print ("Set InputsAppEnable", request.json["InputsAppEnable"], file=sys.stderr)
     
@@ -1007,7 +1007,7 @@ def configuration_inputs_app_general_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/inputs_app/noniso_names", methods=['GET'])
 def configuration_inputs_app_noniso_names():
@@ -1018,7 +1018,7 @@ def configuration_inputs_app_noniso_names():
 @app.route("/configuration/inputs_app/noniso_names", methods=['POST'])
 def configuration_inputs_app_noniso_names_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     arr = cf.InputName.value
     new_values = request.json["InputName"][0:4]
@@ -1027,7 +1027,7 @@ def configuration_inputs_app_noniso_names_post():
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/inputs_app/iso_names", methods=['GET'])
 def configuration_inputs_app_iso_names():
@@ -1066,7 +1066,7 @@ def configuration_inputs_app_iso_names_post():
     cf.InputName.value = arr
     cf.save(cfg_file)
                            
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
  
 @app.route("/configuration/inputs_app/alarm_definitions", methods=['GET'])
 def configuration_inputs_app_alarm_definitions():
@@ -1121,7 +1121,7 @@ def configuration_inputs_app_alarm_definitions_post():
     cf.InputCondition.value = arr
     cf.save(cfg_file)
                            
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/inputs_app/parser", methods=['GET'])
@@ -1147,7 +1147,7 @@ def configuration_outputs_app_general():
 @app.route("/configuration/outputs_app/general", methods=['POST'])
 def configuration_outputs_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.OutputsAppEnable.value = request.json["OutputAppEnable"]
     cf.OutputPollInterval.value = request.json["OutputPollInterval"]
@@ -1155,7 +1155,7 @@ def configuration_outputs_app_general_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/outputs_app/output_names", methods=['GET'])
 def configuration_outputs_app_output_names():
@@ -1166,13 +1166,13 @@ def configuration_outputs_app_output_names():
 @app.route("/configuration/outputs_app/output_names", methods=['POST'])
 def configuration_outputs_app_output_names_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.OutputName.value = request.json["OutputName"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/outputs_app/output_default", methods=['GET'])
 def configuration_outputs_app_output_default():
@@ -1183,13 +1183,13 @@ def configuration_outputs_app_output_default():
 @app.route("/configuration/outputs_app/output_default", methods=['POST'])
 def configuration_outputs_app_output_default_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.OutputDefault.value = request.json["OutputDefault"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/outputs_app/parser", methods=['GET'])
 def configuration_outputs_app_parser():
@@ -1216,7 +1216,7 @@ def configuration_analogs_app_general():
 @app.route("/configuration/analogs_app/general", methods=['POST'])
 def configuration_analogs_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     #print ("Set cf.AnalogsAppEnable.value to %s" % request.json["AnalogsAppEnable"],
     #       type(request.json["AnalogsAppEnable"]),
@@ -1229,7 +1229,7 @@ def configuration_analogs_app_general_post():
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/analogs_app/analog_names", methods=['GET'])
 def configuration_analogs_app_analog_names():
@@ -1240,13 +1240,13 @@ def configuration_analogs_app_analog_names():
 @app.route("/configuration/analogs_app/analog_names", methods=['POST'])
 def configuration_analogs_app_analog_names_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.AnalogName.value = request.json["AnalogName"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/analogs_app/analog_offsets", methods=['GET'])
@@ -1258,13 +1258,13 @@ def configuration_analogs_app_analog_offsets():
 @app.route("/configuration/analogs_app/analog_offsets", methods=['POST'])
 def configuration_analogs_app_analog_offsets_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.AnalogCalOffset.value = request.json["AnalogCalOffset"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/analogs_app/analog_converters", methods=['GET'])
 def configuration_analogs_app_analog_converters():
@@ -1275,13 +1275,13 @@ def configuration_analogs_app_analog_converters():
 @app.route("/configuration/analogs_app/analog_converters", methods=['POST'])
 def configuration_analogs_app_analog_converters_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.AnalogConverter.value = request.json["AnalogConverter"]
 
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/analogs_app/alarm_definitions", methods=['GET'])
 def configuration_analogs_app_alarm_definitions():
@@ -1337,7 +1337,7 @@ def configuration_analogs_app_alarm_definitions_post():
     cf.AnalogCondition.value = arr
     cf.save(cfg_file)
                            
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/analogs_app/parser", methods=['GET'])
 def configuration_analogs_app_parser():
@@ -1364,7 +1364,7 @@ def configuration_1wire_app_general():
 @app.route("/configuration/1wire_app/general", methods=['POST'])
 def configuration_1wire_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.OneWireAppEnable.value = request.json["Wire1AppEnable"]
     cf.OneWirePollInterval.value = request.json["Wire1PollInterval"]
@@ -1373,7 +1373,7 @@ def configuration_1wire_app_general_post():
 
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/1wire_app/alarm_definitions", methods=['GET'])
@@ -1392,7 +1392,7 @@ def configuration_1wire_app_alarm_definitions():
 @app.route("/configuration/1wire_app/alarm_definitions", methods=['POST'])
 def configuration_1wire_app_alarm_definitions_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     app.logger.info("GOT JSON for _alarm_definitions_post ")
     cf.OneWireDeviceName.value = request.json["Wire1DeviceName"]
@@ -1409,7 +1409,7 @@ def configuration_1wire_app_alarm_definitions_post():
     
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/1wire_app/parser", methods=['GET'])
 def configuration_1wire_app_parser():
@@ -1434,7 +1434,7 @@ def configuration_rs232_app_general():
 @app.route("/configuration/rs232_app/general", methods=['POST'])
 def configuration_rs232_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
     
     cf.SerialsAppEnable.value = request.json["SerialAppEnable"]
     cf.SerialAlarmFileSize.value = request.json["SerialAlarmFileSize"]
@@ -1442,7 +1442,7 @@ def configuration_rs232_app_general_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/rs232_app/device_configuration", methods=['GET'])
 def configuration_rs232_app_device_configuration():
@@ -1461,7 +1461,7 @@ def configuration_rs232_app_device_configuration():
 @app.route("/configuration/rs232_app/device_configuration", methods=['POST'])
 def configuration_rs232_app_device_configuration_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SerialName.value = request.json["SerialName"]
     cf.SerialMode.value = request.json["SerialMode"]
@@ -1474,7 +1474,7 @@ def configuration_rs232_app_device_configuration_post():
         
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/rs232_app/alarm_definitions", methods=['GET'])
@@ -1488,14 +1488,14 @@ def configuration_rs232_app_alarm_definition():
 @app.route("/configuration/rs232_app/alarm_definitions", methods=['POST'])
 def configuration_rs232_app_alarm_definition_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.Condition.value = request.json["Condition"]
     cf.SerialScript.value = request.json["SerialScript"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/rs232_app/parser", methods=['GET'])
 def configuration_rs232_app_parser():
@@ -1522,7 +1522,7 @@ def configuration_rs485_app_general():
 @app.route("/configuration/rs485_app/general", methods=['POST'])
 def configuration_rs485_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.RS485AppEnable.value = request.json["RS485AppEnable"]
     cf.RS485PollInterval.value = request.json["RS485PollInterval"]
@@ -1531,7 +1531,7 @@ def configuration_rs485_app_general_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/rs485_app/device_configuration", methods=['GET'])
 def configuration_rs485_app_device_configuration():
@@ -1555,7 +1555,7 @@ def configuration_rs485_app_device_configuration():
 @app.route("/configuration/rs485_app/device_configuration", methods=['POST'])
 def configuration_rs485_app_device_configuration_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     #"SelectDevice": "",
     #"SelectPort":  "",
@@ -1574,7 +1574,7 @@ def configuration_rs485_app_device_configuration_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/rs485_app/modbus_mapping", methods=['GET'])
@@ -1592,7 +1592,7 @@ def configuration_rs485_app_modbus_mapping():
 @app.route("/configuration/rs485_app/modbus_mapping", methods=['POST'])
 def configuration_rs485_app_modbus_mapping_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.P0_ReadData.value = request.json["P0_ReadData"]
     cf.P1_ReadData.value = request.json["P1_ReadData"]
@@ -1604,7 +1604,7 @@ def configuration_rs485_app_modbus_mapping_post():
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/rs485_app/alarm_definitions", methods=['GET'])
 def configuration_rs485_app_alarm_definitions():
@@ -1618,7 +1618,7 @@ def configuration_rs485_app_alarm_definitions():
 @app.route("/configuration/rs485_app/alarm_definitions", methods=['POST'])
 def configuration_rs485_app_alarm_definitions_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.P0_RS485Condition.value = request.json["P0_RS485ConditionX.Y"]
     cf.P1_RS485Condition.value = request.json["P1_RS485ConditionX.Y"]
@@ -1627,7 +1627,7 @@ def configuration_rs485_app_alarm_definitions_post():
 
     cf.save(cfg_file)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/rs485_app/parser", methods=['GET'])
 def configuration_rs485_app_parser():
@@ -1652,14 +1652,14 @@ def configuration_net_app_general():
 @app.route("/configuration/net_app/general", methods=['POST'])
 def configuration_net_app_general_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.NetAppEnable.value = request.json["NetAppEnable"]
     cf.NetAppScript.value = request.json["NetAppScript"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/net_app/netapp_configuration", methods=['GET'])
@@ -1694,7 +1694,7 @@ def configuration_net_app_netapp_configuration():
 @app.route("/configuration/net_app/netapp_configuration/<ind>", methods=['POST'])
 def configuration_net_app_netapp_configuration_post(ind):
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     indx = int(ind)
     if indx < 0 or indx > (len(cf.NetApp)+1):
@@ -1719,7 +1719,7 @@ def configuration_net_app_netapp_configuration_post(ind):
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/net_app/alarm_definitions", methods=['GET'])
 def configuration_net_app_alarm_definitions():
@@ -1731,14 +1731,14 @@ def configuration_net_app_alarm_definitions():
 @app.route("/configuration/net_app/alarm_definitions", methods=['POST'])
 def configuration_net_app_alarm_definitions_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
     
     cf.NetAppCondition.value = request.json["NetAppConditionX.Y"]
     cf.NetAppScripts.value = request.json["NetAppScript"]
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/net_app/snmptrap_configuration", methods=['GET'])
 def configuration_net_app_snmptrap_configuration():
@@ -1761,7 +1761,7 @@ def configuration_net_app_snmptrap_configuration():
 @app.route("/configuration/net_app/snmptrap_configuration", methods=['POST'])
 def configuration_net_app_snmptrap_configuration_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
     
     iport = "%s,%s,%s" % (request.json["Interface"],
                           request.json["Protocol"],
@@ -1773,7 +1773,7 @@ def configuration_net_app_snmptrap_configuration_post():
 
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 @app.route("/configuration/net_app/snmp_alarm_definitions", methods=['GET'])
@@ -1787,13 +1787,13 @@ def configuration_net_app_snmp_alarm_definitions():
 @app.route("/configuration/net_app/snmp_alarm_definitions", methods=['POST'])
 def configuration_net_app_snmp_alarm_definitions_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SNMPAppCondition.value = request.json["IndexedCond"]
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/net_app/syslog_configuration", methods=['GET'])
 def configuration_net_app_syslog_configuration():
@@ -1808,7 +1808,7 @@ def configuration_net_app_syslog_configuration():
 @app.route("/configuration/net_app/syslog_configuration", methods=['POST'])
 def configuration_net_app_syslog_configuration_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SyslogAppMode.value = request.json["SyslogAppMode"]
     cf.SyslogAppRawFileSize.value = request.json["SyslogAppRawFileSize"]
@@ -1819,7 +1819,7 @@ def configuration_net_app_syslog_configuration_post():
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/net_app/syslog_alarm_definitions", methods=['GET'])
 def configuration_net_app_syslog_alarm_definitions():
@@ -1832,13 +1832,13 @@ def configuration_net_app_syslog_alarm_definitions():
 @app.route("/configuration/net_app/syslog_alarm_definitions", methods=['POST'])
 def configuration_net_app_syslog_alarm_definitions_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SyslogAppCondition.value = request.json["IndexedCond"]
     
     cf.save(cfg_file)
     
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/configuration/net_app/parser", methods=['GET'])
 def configuration_net_app_parser():
@@ -1969,14 +1969,14 @@ def control_outputs_post():
         app.logger.info("Set output to [%s]" % output)
         wb.setOutput("".join(output))
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 
 
 @app.route("/control/restart", methods=['POST'])
 def control_restart_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     if "NetReset" in request.json and request.json["NetReset"]:
         wb.netReset()
@@ -1989,14 +1989,14 @@ def control_restart_post():
 
     if "PowerCycle" in request.json and request.json["PowerCycle"]:
         return jsonify({#::FIXME::
-        }, 501
+        })
 
-    return "OK", 201, {"Content-Type": "application/json"}
-
+    # return "OK"
+    return "OK"
 @app.route("/utilities/analog_calibration", methods=['POST'])
 def control_analog_calibration_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     #SelectCalibration
     wb.calibrate(request.json["ANx"],
@@ -2008,8 +2008,8 @@ def control_analog_calibration_post():
                  request.json["SInterval"],
                  request.json["CalValue"])
 
-    return "OK", 201, {"Content-Type": "application/json"}
-
+    # return "OK"
+    return "OK"
 @app.route("/utilities/1wire_discovery", methods=['GET'])
 def utilities_1wire_discovery():
     (code, stdout, stderr) = wb.callApplication("cv_discover_1wire")
@@ -2061,10 +2061,10 @@ def utilities_data_backup_post():
 
     if request.json["Push"]:
         app.logger.info("Not implemented yet")
-        return jsonify({}, 501
+        return jsonify({})
     elif request.json["Backup"]:
         wb.runBackup()
-        return "OK", 201, {"Content-Type": "application/json"}
+        return "OK"
     else:
         return "Bad request", 400, {"Content-Type": "application/json"}
 
@@ -2072,7 +2072,7 @@ def utilities_data_backup_post():
 def utilities_sw_upgrade_post():
     return jsonify({
         # ::FIXME:: Backup utility???
-      }, 501
+      })
 
 @app.route("/utilities/file_transfer", methods=['GET'])
 def utilities_file_transfer():
@@ -2098,7 +2098,7 @@ def utilities_file_transfer_post():
                   "DevicePath", "ServerPath"])
     transfer = request.json["TransferType"].lower()
     if transfer == "none":
-        return "OK", 201, {"Content-Type": "application/json"}
+        return "OK"
     elif transfer.startswith("device"):
         (output, code ) = wb.runSafeCopy(request.json["DevicePath"],
                                           request.json["ServerPath"],
@@ -2122,14 +2122,14 @@ def utilities_file_transfer_post():
 @app.route("/utilities/map_html", methods=['POST'])
 def utilities_map_html_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     cf.SiteCoordinates.value = request.json["SiteCoordinates"]
 
     wb.saveFile(iframe_file, request.json["HtmlCode"])
     
     cf.save(cfg_file)
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
 @app.route("/utilities/snmptraps", methods=['GET'])
 def utilities_snmptraps():
@@ -2164,7 +2164,7 @@ def utilities_snmptraps_post():
                     cf.snmpv3SecurityLevel,cf.snmpv3PrivProtocol,
                     cf.snmpv3PrivKey, cf.Eth0WANIP)
 
-    return "OK", 201, {"Content-Type": "application/json"}
+    return "OK"
 
                            
 @app.route("/utilities/engineID", methods=['GET'])
@@ -2176,7 +2176,7 @@ def utilities_engineid():
 @app.route("/utilities/engineID", methods=['POST'])
 def utilities_engineid_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     indx = request.json["index"]
     if indx != 0 and indx != 1:
@@ -2204,7 +2204,7 @@ def utilities_engineid_post():
 @app.route("/utilities/ping", methods=['POST'])
 def utilities_ping_post():
     if not request.is_json:
-        return "Unsupported Media Type", 415
+        return "Unsupported Media Type"
 
     args = ["-c", "3",  request.json["IPAddress"]]
     try:
@@ -2225,19 +2225,19 @@ def utilities_ping_post():
 def reports_charts_analogs_post():
     return jsonify({
         # ::FIXME:: Backup utility???
-      }, 501
+      })
 
 @app.route("/reports/charts_1wire", methods=['POST'])
 def reports_charts_1wire_post():
     return jsonify({
         # ::FIXME:: Backup utility???
-      }, 501
+      })
 
 @app.route("/reports/charts_rs485", methods=['POST'])
 def reports_charts_rs485_post():
     return jsonify({
         # ::FIXME:: Backup utility???
-      }, 501
+      })
 
 
 #@app.route("/<string:name>")
