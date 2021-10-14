@@ -2219,7 +2219,7 @@ def utilities_ping_post():
         return jsonify({
             "out" : "",
             "err" : str(e)
-        }, 400 
+        })
 
 @app.route("/reports/charts_analogs", methods=['POST'])
 def reports_charts_analogs_post():
