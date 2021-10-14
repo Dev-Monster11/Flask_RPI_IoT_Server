@@ -2051,9 +2051,9 @@ def utilities_modbus_discovery_post():
     
     (code, out, err) = wb.callApplication("cv_discover_rs485", argc)
     if code == 0:
-        return jsonify({"ActionResult": out.splitlines()}), {"Content-Type": "application/json"})
+        return jsonify({"ActionResult": out.splitlines()}))
     else:
-        return jsonify({"ActionResult": err}, 400, {"Content-Type": "application/json"})
+        return jsonify({"ActionResult": err}, 400)
 
 @app.route("/utilities/data_backup", methods=['POST'])
 def utilities_data_backup_post():
